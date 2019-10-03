@@ -1,0 +1,21 @@
+@function get-styles($theme: $theme) {
+  $styles: ();
+
+  @each $name, $rules in map-get($theme, 'styles') {
+    $style: ();
+
+    // Eg styles.h1
+    @each $key, $val in $rules {
+      @if ($key == fontFamily) {
+        $style: map-merge-pair($style, font-family, fonts($val));
+      } @else if ($key == fontWeight) {
+        $style: map-merge-pair($style, font-weight, fontWeights($val));
+      } @else if ($key == color) {
+        $style: map-merge-pair($style, color, colors($val));
+      }
+    }
+
+    $styles: map-merge-pair($styles, $name, $style);
+  }
+  @return $styles;
+}

@@ -1,0 +1,33 @@
+// Where several css values have been used in theme-ui
+// we assume they're for different breakpoints.
+// Eg: fontSize: (2, 3)
+@mixin get-style-breakpoints(
+  $key,
+  $values,
+  $theme: $theme,
+  $styles: get-styles($theme)
+) {
+  $i: 1;
+  $breakpoints: map-get($theme, breakpoints);
+
+  @each $val in $values {
+    @if $val == null {
+      // null means skip this breakpoint.
+    } @else {
+      @if $i == 1 {
+        // No need for media query for mobile-first breakpoint:
+        #{$key}: #{$val};
+      } @else {
+        // Look up size of this breakpoint:
+        $breakpoint: nth($breakpoints, $i);
+
+        // Apply style at this breakpoint:
+        @media screen and (min-width: $breakpoint) {
+          #{$key}: #{$val};
+        }
+      }
+    }
+
+    $i: $i + 1;
+  }
+}

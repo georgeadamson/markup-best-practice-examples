@@ -1,3 +1,5 @@
+const path = require('path');
+
 const prettierConfig = {
   printWidth: 100,
   tabWidth: 2,
@@ -6,7 +8,7 @@ const prettierConfig = {
   singleQuote: true
 };
 
-module.exports = function({ config }) {
+module.exports = async function({ config, mode }) {
   config.module.rules.push({
     test: /\.stories\.jsx?$/,
     loaders: require.resolve('@storybook/source-loader'),
@@ -15,6 +17,12 @@ module.exports = function({ config }) {
       prettierConfig
     },
     enforce: 'pre'
+  });
+
+  config.module.rules.push({
+    test: /\.scss$/,
+    use: ['style-loader', 'css-loader', 'sass-loader'],
+    include: path.resolve(__dirname, '../')
   });
 
   return config;

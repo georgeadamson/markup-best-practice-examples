@@ -1,0 +1,9 @@
+// Todo: postcss css-mqpacker
+@import './theme-ui.config';
+
+body {
+  background: colors(primary);
+  //   font-family: fonts(heading);
+
+  @include get-style(body);
+}

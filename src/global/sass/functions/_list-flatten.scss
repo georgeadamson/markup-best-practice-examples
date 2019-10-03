@@ -1,0 +1,19 @@
+@function list-flatten($list) {
+  $result: ();
+  $separator: list-separator($list);
+
+  @each $item in $list {
+    @if length($item) > 1 {
+      // In case there are deeply nested lists:
+      $sublist: list-flatten($item);
+
+      @each $i in $sublist {
+        $result: append($result, $i, $separator);
+      }
+    } @else {
+      $result: append($result, $item, $separator);
+    }
+  }
+
+  @return $result;
+}

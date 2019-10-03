@@ -1,0 +1,7 @@
+@import './map-get-deep';
+
+@function map-has-deep($deep, $map, $keys...) {
+  // Append "silent" flag so we can use map-get-deep without errors:
+  $keys: join($keys, true);
+  @return map-get-deep($deep, $map, $keys...) != null;
+}

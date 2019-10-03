@@ -1,0 +1,118 @@
+@import './functions/index.scss';
+
+$theme: (
+  colors: (
+    text: #000,
+    background: #eee,
+    primary: #07c,
+    modes: (
+      dark: (
+        text: #fff,
+        background: #000,
+        primary: #0cf
+      )
+    )
+  ),
+  fonts: (
+    body: 'system-ui, sans-serif',
+    heading: 'Georgia, serif',
+    monospace: 'Menlo, monospace'
+  ),
+  fontSizes: (
+    12,
+    14,
+    16,
+    20,
+    24,
+    32,
+    48,
+    64
+  ),
+  fontWeights: (
+    body: (
+      200,
+      300
+    ),
+    heading: 700,
+    bold: 700
+  ),
+  lineHeights: (
+    body: 1.5,
+    heading: 1.125
+  ),
+  letterSpacings: (
+    body: normal,
+    caps: 0.2em
+  ),
+  space: (
+    4,
+    8,
+    12,
+    16,
+    32,
+    64
+  ),
+  styles: (
+    h1: (
+      fontSize: 32,
+      fontFamily: 'heading',
+      fontWeight: 'heading',
+      color: 'primary',
+      mt: 4,
+      mb: 2
+    ),
+    body: (
+      fontSize: 16,
+      fontFamily: 'body',
+      fontWeight: 'body',
+      mt: 4,
+      mb: 2,
+      color: text
+    )
+  ),
+  breakpoints: (
+    40em,
+    56em,
+    64em
+  )
+);
+
+@function theme($keys...) {
+  // TODO: Fix this to support modes:
+  @if not map-has-deep($theme, $keys...) {
+    // Add "modes" key, eg: [colors, modes, dark, primary]
+    $keysWithModesKey: list-splice($keys, 2, 0, modes);
+
+    @if map-has-deep($theme, $keysWithModesKey...) {
+      @return map-get-deep($theme, $keysWithModesKey...);
+    } @else {
+      // @debug map-get-deep($theme, $keysWithModesKey...);
+    }
+  }
+
+  @return map-get-deep($theme, $keys...);
+}
+
+@function colors($keys...) {
+  @return theme(colors, $keys...);
+}
+
+@function fonts($keys...) {
+  @return theme(fonts, $keys...);
+}
+
+@function fontWeights($keys...) {
+  @return theme(fontWeights, $keys...);
+}
+
+// Render map of styles as css rules:
+// Eg: .heading { @include get-style(h1); }
+@mixin get-style($name, $theme: $theme, $styles: get-styles($theme)) {
+  @each $key, $val in map-get($styles, $name) {
+    @if type-of($val) == list {
+      @include get-style-breakpoints($key, $val, $theme, $styles);
+    } @else {
+      #{$key}: #{$val};
+    }
+  }
+}

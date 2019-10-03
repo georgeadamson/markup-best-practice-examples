@@ -1,6 +1,7 @@
 import { configure, addDecorator } from '@storybook/html';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
+import '../src/global/sass/global.scss';
 
 addDecorator(withA11y);
 addDecorator(withKnobs);

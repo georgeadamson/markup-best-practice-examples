@@ -1,0 +1,26 @@
+@import './list-slice';
+
+@function list-splice(
+  $list,
+  $start,
+  $deleteCount: length($list) - $start,
+  $values...
+) {
+  $result: null;
+
+  @if type-of($start) != number {
+    @warn "$start: #{quote($start)} is not a number for `insert-nth`.";
+  } @else if $start < 1 {
+    @warn "List index 0 must be a non-zero integer for `insert-nth`";
+  } @else if $start > length($list) {
+    @warn "List index is #{$start} but list is only #{length($list)} item long for `insert-nth'.";
+  } @else {
+    $left: if($start == 1, (), list-slice($list, 1, $start - 1));
+    $right: list-slice($list, $start + $deleteCount);
+
+    $result: join($left, $values);
+    $result: join($result, $right);
+  }
+
+  @return $result;
+}

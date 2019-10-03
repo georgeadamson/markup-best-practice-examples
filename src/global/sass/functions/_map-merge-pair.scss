@@ -1,0 +1,15 @@
+@function map-merge-pair($map, $pairs...) {
+  @for $i from 1 through length($pairs) / 2 {
+    $key: nth($pairs, $i * 2 - 1);
+    $val: nth($pairs, $i * 2);
+
+    $map: map-merge(
+      $map,
+      (
+        $key: $val
+      )
+    );
+  }
+
+  @return $map;
+}

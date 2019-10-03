@@ -1,0 +1,62 @@
+@import './list-flatten';
+
+// Usage:
+// Deep get:
+// - map-get-deep($map, $keys...)
+// - map-get-deep($map, $key1, $key2, $etc)
+// Or same as map-get:
+// - map-get-deep($map, $key)
+// - map-get-deep(false, $map, $keys...)
+// - map-get-deep(false, $map, key1, $key2, $etc)
+@function map-get-deep($deep, $map, $keys...) {
+  // Logic to allow this to be used the same way as map-get()
+  @if (type-of($deep) == bool) {
+    // We received map-get-deep($deep, $map, $keys...)
+    @if ($deep == false) {
+      @return map-get($map, nth($keys, 1));
+    }
+  } @else {
+    // We received map-get-deep($map, $keys...)
+    $keys: join($map, $keys);
+    $map: $deep;
+  }
+
+  $silent: nth($keys, length($keys));
+
+  @if type-of($silent) == bool {
+    // Remove last
+  }
+
+  $result: $map;
+
+  @if type-of($map) == map {
+    // Just in case there are nested lists:
+    // $keys: list-flatten($keys);
+
+    @each $key in $keys {
+      @if type-of($result) != map {
+        @if $silent == true {
+          @return null;
+        } @else {
+          @warn '@mixin map-get-deep(): Expected to find key `#{$key}` but subnode `#{$result}` (#{type-of($result)}) is not a map.';
+        }
+      } @else if map-has-key($result, $key) {
+        $result: map-get($result, $key);
+      } @else {
+        @if $silent == true {
+          @return null;
+        } @else {
+          @warn '@mixin map-get-deep(): Expected to find key `#{$key}` in map `#{$result}`.';
+        }
+      }
+    }
+  } @else {
+    @if $silent == true {
+      @return null;
+    } @else {
+      @error '@mixin map-get-deep(): Expected $map to be a map but it is `#{$map}` (#{type-of($map)}).';
+    }
+  }
+
+  @return $result;
+}
