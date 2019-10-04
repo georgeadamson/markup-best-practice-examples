@@ -30,15 +30,22 @@
       "heading": "1px"
     },
     "space": [0, 4, 8, 16, 32, 64, 128],
+    "sizes": [8, 12, 16, 24, 32, 48, 64, 96, 128, 192, 256, 384, 512, 640, 768],
     "styles": {
       "h1": {
-        "fontSize": "100px",
+        "fontSize": ["65px", "100px"],
+        "fontFamily": "heading",
+        "fontWeight": "heading",
+        "color": "primary"
+      },
+      "h2": {
+        "fontSize": "80px",
         "fontFamily": "heading",
         "fontWeight": "heading",
         "color": "primary"
       },
       "body": {
-        "fontSize": 18,
+        "fontSize": "18px",
         "fontFamily": "body",
         "fontWeight": "body",
         "lineHeight": "body",
@@ -46,6 +53,6 @@
         "background": "background"
       }
     },
-    "breakpoints": ["40em", "56em", "64em"]
+    "breakpoints": ["320px", "768px", "992px", "1200px"]
   }
 }

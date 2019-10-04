@@ -2,12 +2,11 @@
 @import './theme-walk';
 
 // Some css props cannot be unitless:
-$scalesThatRequireUnits: [fontSizes margin];
+$scalesThatRequireUnits: [fontSizes space sizes];
 
 // Private helper to make subsequent code more readable:
 // The first item in $keys will be a scale such as colors or fontSizes etc.
-@function requireUnitsFor($keys) {
-  $scale: nth($keys, 1);
+@function isUnitsRequiredFor($scale) {
   @return index($scalesThatRequireUnits, $scale) != null;
 }
 
@@ -15,7 +14,12 @@ $scalesThatRequireUnits: [fontSizes margin];
   $value: theme-walk($theme, $keys...);
 
   // font-size etc expect units. Append px if necessary:
-  @if requireUnitsFor($keys) and unitless($value) {
+  $scale: nth($keys, 1);
+  @if isUnitsRequiredFor($scale) and
+    type-of($value) ==
+    number and
+    unitless($value)
+  {
     $value: #{$value}px;
   }
 

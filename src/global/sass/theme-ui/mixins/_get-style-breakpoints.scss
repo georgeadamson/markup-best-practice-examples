@@ -11,14 +11,18 @@
     } @else {
       @if $i == 1 {
         // No need for media query for mobile-first breakpoint:
-        #{$key}: #{$val};
+        @each $cssProp, $cssVal in get-style($key, $val) {
+          #{$cssProp}: #{$cssVal};
+        }
       } @else if $i <= length($breakpoints) {
         // Look up width of this breakpoint:
         $breakpoint: nth($breakpoints, $i);
 
         // Apply style at this breakpoint:
         @media screen and (min-width: $breakpoint) {
-          #{$key}: #{$val};
+          @each $cssProp, $cssVal in get-style($key, $val) {
+            #{$cssProp}: #{$cssVal};
+          }
         }
       } @else {
         @warn 'get-style-breakpoints(): Expected #{length($breakpoint)} breakpoint values, got #{length($values)}.';

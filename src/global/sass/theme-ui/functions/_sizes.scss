@@ -1,0 +1,3 @@
+@function sizes($keys...) {
+  @return theme(sizes, $keys...);
+}

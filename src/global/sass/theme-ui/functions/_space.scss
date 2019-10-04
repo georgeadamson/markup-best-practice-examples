@@ -1,0 +1,8 @@
+@function space($keys...) {
+  @return theme(space, $keys...);
+}
+
+// Alias for space()
+@function spaces($keys...) {
+  @return space($keys...);
+}

@@ -5,7 +5,10 @@ import { text, select } from '@storybook/addon-knobs';
 const stories = storiesOf('Markup', module);
 
 stories.add('Typography', () => {
-  return `<h1 class="h1">Hello world</h1>`;
+  return `
+    <h1 class="h1">Heading h1</h1>
+    <h2 class="h2">Heading h2</h2>
+  `;
 });
 
 /*

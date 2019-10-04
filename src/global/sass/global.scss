@@ -13,31 +13,38 @@
 }
 
 body {
-  background: colors(primary);
-  background: theme(colors, background);
+  // background: colors(primary);
+  // background: theme(colors, background);
 
-  font-family: fonts(body);
-  font-family: theme(fonts, body);
+  // font-family: fonts(body);
+  // font-family: theme(fonts, body);
 
-  font-size: fontSizes(0);
-  font-size: theme(fontSizes, 0);
+  // font-size: fontSizes(0);
+  // font-size: theme(fontSizes, 0);
 
-  font-weight: fontWeights(body);
-  font-weight: theme(fontWeights, body);
+  // font-weight: fontWeights(body);
+  // font-weight: theme(fontWeights, body);
 
-  line-height: lineHeights(body);
-  line-height: theme(lineHeights, body);
+  // line-height: lineHeights(body);
+  // line-height: theme(lineHeights, body);
 
-  letter-spacing: letterSpacings(body);
-  letter-spacing: theme(letterSpacings, body);
+  // letter-spacing: letterSpacings(body);
+  // letter-spacing: theme(letterSpacings, body);
+
+  // margin: space(4);
+  // margin: theme(space, 4);
+
+  // top: sizes(4);
+  // top: theme(sizes, 4);
 
   // @include get-style(body);
 }
 
 .h1 {
-  // @include get-style(h1);
+  font-size: fontSizes(7);
+  @include get-style(h1);
 }
 
 .h2 {
-  //@include get-style(h2);
+  @include get-style(h2);
 }

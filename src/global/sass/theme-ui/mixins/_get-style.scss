@@ -4,15 +4,20 @@
 // Render map of styles as css rules:
 // Eg: .heading { @include get-style(h1); }
 @mixin get-style($name, $theme: $theme) {
-  $style: map-get(map-get($theme, styles), $name);
+  $styles: map-get($theme, styles);
+  $style: map-get($styles, $name);
 
-  @each $key, $val in $style {
-    @if type-of($val) == list {
-      @include get-style-breakpoints($key, $val, $theme);
-    } @else {
-      @each $cssProp, $cssVal in get-style($key, $val) {
-        #{$cssProp}: #{$cssVal};
+  @if $style != null {
+    @each $key, $val in $style {
+      @if type-of($val) == list {
+        @include get-style-breakpoints($key, $val, $theme);
+      } @else {
+        @each $cssProp, $cssVal in get-style($key, $val) {
+          #{$cssProp}: #{$cssVal};
+        }
       }
     }
+  } @else {
+    @warn '@mixin get-style(#{$name}): No such style: theme.styles.#{$name}';
   }
 }
