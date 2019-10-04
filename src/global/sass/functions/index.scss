@@ -4,10 +4,6 @@
 @import './list-splice';
 
 // Generic Map helpers:
-@import './map-has-deep';
+@import './map-has-key-deep';
 @import './map-get-deep';
 @import './map-merge-pair';
-
-// Theme-UI helpers:
-@import './get-styles';
-@import './get-style-breakpoints';

@@ -1,0 +1,3 @@
+@function letterSpacings($keys...) {
+  @return theme(letterSpacings, $keys...);
+}

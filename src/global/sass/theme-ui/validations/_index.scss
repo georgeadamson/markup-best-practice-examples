@@ -1,0 +1,9 @@
+@import './validate-scales';
+@import './validate-colors';
+@import './validate-styles';
+
+// Call this function after importing theme-ui json:
+@function validate-theme($theme: $theme) {
+  @return validate-theme-scales($theme) and validate-theme-colors($theme) and
+    validate-theme-styles($theme);
+}

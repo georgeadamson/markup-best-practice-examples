@@ -1,0 +1,17 @@
+// Theme-UI keys helpers:
+// https://theme-ui.com/theming
+
+// TODO: Move only the required dependencies into theme-ui folder:
+@import '../../functions/';
+
+@import './theme';
+@import './colors';
+@import './fonts';
+@import './fontSizes';
+@import './fontWeights';
+@import './lineHeights';
+@import './letterSpacings';
+
+// Theme-UI styles helpers:
+// https://theme-ui.com/theming#styles
+@import './get-styles';

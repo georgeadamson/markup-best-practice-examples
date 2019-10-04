@@ -1,0 +1,74 @@
+// Usage:
+// - theme-walk($map, $key)
+// - theme-walk($map, $keys...)
+// - theme-walk($map, key1, $key2, $etc)
+@function theme-walk($map, $keys...) {
+  $breadcrumbTrail: [];
+
+  // The last item in $keys might be flag to silence error messages:
+  $silent: nth($keys, length($keys));
+
+  @if type-of($silent) == bool {
+    // Remove last
+    @warn 'TODO: Remove $silent flag';
+  }
+
+  $result: $map;
+
+  @if type-of($map) == map {
+    // Just in case there are nested lists:
+    // $keys: list-flatten($keys);
+
+    @each $key in $keys {
+      $breadcrumbTrail: join($breadcrumbTrail, $key);
+
+      // Leaf nodes such as fontSizes can be a list of values:
+      // In which case $key must be an index.
+      // Note that the calling function may need to add units (eg px)
+      @if type-of($result) == list and type-of($key) == number {
+        @if $key >= 0 and $key <= length($result) {
+          @return nth($result, $key + 1);
+        } @else {
+          @if $silent == true {
+            @return null;
+          } @else {
+            @warn '@function theme-walk(): Expected key `#{$key}` to valid for list `#{$result}`. (Path: #{inspect($breadcrumbTrail)})';
+          }
+        }
+      }
+      // Otherwise we expect the current result to be a map:
+      @else if type-of($result) != map {
+        @if $silent == true {
+          @return null;
+        } @else {
+          @warn '@function theme-walk(): Expected to find key `#{$key}` but subnode `#{$result}` (#{type-of($result)}) is not a map. (Path: #{inspect($breadcrumbTrail)})';
+        }
+      }
+      // Handle the next branch in the path:
+      @else if map-has-key($result, $key) {
+        $child: map-get($result, $key);
+
+        @if type-of($child) == map or type-of($child) == list {
+          $result: $child;
+        } @else {
+          @return $child;
+        }
+      } @else {
+        // Key not found in $map path:
+        @if $silent == true {
+          @return null;
+        } @else {
+          @warn '@function theme-walk(): Expected to find key `#{$key}` in map `#{$result}`. (Path: #{inspect($breadcrumbTrail)})';
+        }
+      }
+    }
+  } @else {
+    @if $silent == true {
+      @return null;
+    } @else {
+      @error '@function theme-walk(): Expected $map to be a map but it is `#{$map}` (#{type-of($map)}). (Path: #{inspect($breadcrumbTrail)})';
+    }
+  }
+
+  @return $result;
+}

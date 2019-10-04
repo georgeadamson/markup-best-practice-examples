@@ -1,0 +1,3 @@
+@function fonts($keys...) {
+  @return theme(fonts, $keys...);
+}

@@ -1,0 +1,51 @@
+{
+  "theme": {
+    "colors": {
+      "text": "#333132",
+      "background": "#F9F9F9",
+      "primary": "#AF0D63",
+      "modes": {
+        "dark": {
+          "text": "#fff",
+          "background": "#000",
+          "primary": "#AF0D63"
+        }
+      }
+    },
+    "fonts": {
+      "body": "'Arial,sans-serif'",
+      "heading": "'have-heart-two,Arial,sans-serif'"
+    },
+    "fontSizes": [12, 14, 16, 20, 24, 32, 48, 64],
+    "fontWeights": {
+      "body": 400,
+      "heading": 400
+    },
+    "lineHeights": {
+      "body": 1.5,
+      "heading": 1.125
+    },
+    "letterSpacings": {
+      "body": "normal",
+      "heading": "1px"
+    },
+    "space": [0, 4, 8, 16, 32, 64, 128],
+    "styles": {
+      "h1": {
+        "fontSize": "100px",
+        "fontFamily": "heading",
+        "fontWeight": "heading",
+        "color": "primary"
+      },
+      "body": {
+        "fontSize": 18,
+        "fontFamily": "body",
+        "fontWeight": "body",
+        "lineHeight": "body",
+        "color": "text",
+        "background": "background"
+      }
+    },
+    "breakpoints": ["40em", "56em", "64em"]
+  }
+}

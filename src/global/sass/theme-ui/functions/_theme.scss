@@ -1,0 +1,23 @@
+@import '../../functions/map-has-key-deep';
+@import './theme-walk';
+
+// Some css props cannot be unitless:
+$scalesThatRequireUnits: [fontSizes margin];
+
+// Private helper to make subsequent code more readable:
+// The first item in $keys will be a scale such as colors or fontSizes etc.
+@function requireUnitsFor($keys) {
+  $scale: nth($keys, 1);
+  @return index($scalesThatRequireUnits, $scale) != null;
+}
+
+@function theme($keys...) {
+  $value: theme-walk($theme, $keys...);
+
+  // font-size etc expect units. Append px if necessary:
+  @if requireUnitsFor($keys) and unitless($value) {
+    $value: #{$value}px;
+  }
+
+  @return $value;
+}

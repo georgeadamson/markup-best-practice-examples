@@ -2,7 +2,7 @@ import { document, console } from 'global';
 import { storiesOf } from '@storybook/html';
 import { text, select } from '@storybook/addon-knobs';
 
-const stories = storiesOf('Demo', module);
+const stories = storiesOf('Markup', module);
 
 stories.add('Carousel', () => {
   const active = select('Item', { item0: 0, item1: 1, item2: 2, item3: 3 });
@@ -20,7 +20,7 @@ stories.add('Carousel', () => {
     (item, i) => `
       <div>Item ${i}: ${item}</div>
       <a href=".">A link inside carousel item${i}</a>
-    `
+     `
   );
 
   const style = `
@@ -44,6 +44,9 @@ stories.add('Carousel', () => {
       -ms-scroll-snap-type: x mandatory;
       -webkit-scroll-snap-type: x mandatory;
       scroll-snap-type: x mandatory;
+
+      /* This seems to fix a strange painting lag after scrolling in Chrome: */
+      -webkit-transform: translate3d(0, 0, 0);
     }
     .carousel__item {
       display: inline-block;
@@ -53,7 +56,7 @@ stories.add('Carousel', () => {
       /* This prevents padding from causing misalignment after snap scroll: */
       box-sizing: border-box;
       /* Position to snap scrolling to: */
-      scroll-snap-align: center;
+      scroll-snap-align: start;
     }
     .carousel__item:nth-child(odd) {
       background: #aaa;
@@ -89,6 +92,23 @@ stories.add('Carousel', () => {
       /* This is necessary to prevent Lighthouse Report from thinking hidden text is too small: */
       font-size: 1rem;
     }
+
+    /* Show 2 items at a time, with less dots */
+    @media screen and (min-width: 48rem) {
+      .carousel:nth-of-type(2) .carousel__item {
+        width: 50%;
+      }
+      .carousel:nth-of-type(2) .carousel__dot:nth-child(2n):not(:last-child) {
+        display: none;
+      }
+
+      .carousel:nth-of-type(3) .carousel__item {
+        width: 33%;
+      }
+      .carousel:nth-of-type(3) .carousel__dot:not(:nth-child(3n - 2)):not(:last-child) {
+        display: none;
+      }
+    }
   </style>
   `;
 
@@ -105,6 +125,7 @@ stories.add('Carousel', () => {
         )
         .join('')}
     </ul>
+    <!-- Dots: -->
     <nav>
       <ul class="carousel__dots" tabindex="0" aria-label="Carousel navigation">
         ${items
@@ -125,9 +146,9 @@ stories.add('Carousel', () => {
 
   return (
     style +
-    markup.replace(/item(\d)/g, 'itemA$1') +
-    markup.replace(/item(\d)/g, 'itemB$1') +
-    '<script>alert(1)</script>'
+    markup.replace(/item(\d)/g, 'A item $1') +
+    markup.replace(/item(\d)/g, 'B item $1') +
+    markup.replace(/item(\d)/g, 'C item $1')
   );
 });
 

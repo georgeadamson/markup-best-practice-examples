@@ -1,118 +1,26 @@
-@import './functions/index.scss';
+// This is an SCSS implementation of Theme-UI.
+// Read about Theme-UI: https://theme-ui.com/theming
 
-$theme: (
-  colors: (
-    text: #000,
-    background: #eee,
-    primary: #07c,
-    modes: (
-      dark: (
-        text: #fff,
-        background: #000,
-        primary: #0cf
-      )
-    )
-  ),
-  fonts: (
-    body: 'system-ui, sans-serif',
-    heading: 'Georgia, serif',
-    monospace: 'Menlo, monospace'
-  ),
-  fontSizes: (
-    12,
-    14,
-    16,
-    20,
-    24,
-    32,
-    48,
-    64
-  ),
-  fontWeights: (
-    body: (
-      200,
-      300
-    ),
-    heading: 700,
-    bold: 700
-  ),
-  lineHeights: (
-    body: 1.5,
-    heading: 1.125
-  ),
-  letterSpacings: (
-    body: normal,
-    caps: 0.2em
-  ),
-  space: (
-    4,
-    8,
-    12,
-    16,
-    32,
-    64
-  ),
-  styles: (
-    h1: (
-      fontSize: 32,
-      fontFamily: 'heading',
-      fontWeight: 'heading',
-      color: 'primary',
-      mt: 4,
-      mb: 2
-    ),
-    body: (
-      fontSize: 16,
-      fontFamily: 'body',
-      fontWeight: 'body',
-      mt: 4,
-      mb: 2,
-      color: text
-    )
-  ),
-  breakpoints: (
-    40em,
-    56em,
-    64em
-  )
-);
+// Init helper functions & mixins:
+@import './theme-ui';
 
-@function theme($keys...) {
-  // TODO: Fix this to support modes:
-  @if not map-has-deep($theme, $keys...) {
-    // Add "modes" key, eg: [colors, modes, dark, primary]
-    $keysWithModesKey: list-splice($keys, 2, 0, modes);
+// Import JSON Theme-UI config into global $theme variable:
+// Created using: https://theme-ui.com/customize
+// Imported using: https://www.npmjs.com/package/node-sass-json-importer
+@import './theme-ui.config.json';
 
-    @if map-has-deep($theme, $keysWithModesKey...) {
-      @return map-get-deep($theme, $keysWithModesKey...);
-    } @else {
-      // @debug map-get-deep($theme, $keysWithModesKey...);
-    }
-  }
+// Parse the imported theme to help track down mistakes early:
+$is-theme-valid: validate-theme($theme);
 
-  @return map-get-deep($theme, $keys...);
-}
+// Exports: $theme, functions & mixins.
 
-@function colors($keys...) {
-  @return theme(colors, $keys...);
-}
+/** Examples:
 
-@function fonts($keys...) {
-  @return theme(fonts, $keys...);
-}
+// To get one specific style:
+background:colors(primary);
+font-family: fonts(heading);
 
-@function fontWeights($keys...) {
-  @return theme(fontWeights, $keys...);
-}
+// To get several styles:
+@include get-style(heading);
 
-// Render map of styles as css rules:
-// Eg: .heading { @include get-style(h1); }
-@mixin get-style($name, $theme: $theme, $styles: get-styles($theme)) {
-  @each $key, $val in map-get($styles, $name) {
-    @if type-of($val) == list {
-      @include get-style-breakpoints($key, $val, $theme, $styles);
-    } @else {
-      #{$key}: #{$val};
-    }
-  }
-}
+*/

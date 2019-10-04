@@ -1,0 +1,21 @@
+// https://theme-ui.com/theme-spec#theme-scales
+$themeExpectedScaleKeys: [ colors fonts fontSizes fontWeights lineHeights space
+  letterSpacings sizes borders borderWidths borderStyles radii shadows zIndices
+  styles breakpoints ];
+
+// Add your custom variants here so they don't break your theme validation:
+// https://theme-ui.com/theme-spec#variants
+$themeCustomScaleKeys: [];
+
+@function validate-theme-scales($theme: $theme) {
+  $expectedKeys: join($themeExpectedScaleKeys, $themeCustomScaleKeys);
+
+  @each $key in map-keys($theme) {
+    @if index($expectedKeys, $key) == null {
+      @warn 'Warning: Your Theme-UI config contains an unexpected key: `theme.#{$key}`. See https://theme-ui.com/theme-spec#theme-scales';
+      @return false;
+    }
+  }
+
+  @return true;
+}

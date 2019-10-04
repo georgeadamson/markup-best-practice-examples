@@ -1,0 +1,3 @@
+@function lineHeights($keys...) {
+  @return theme(lineHeights, $keys...);
+}

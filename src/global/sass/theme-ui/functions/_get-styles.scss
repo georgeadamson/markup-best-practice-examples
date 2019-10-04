@@ -1,0 +1,25 @@
+@import './get-style';
+
+// This translates all the theme.styles to css rules.
+// Eg: "lineHeight": "body" --> line-height: 1.1
+@function get-styles($theme: $theme) {
+  $styles: ();
+
+  @each $name, $rules in map-get($theme, 'styles') {
+    $rule: ();
+
+    // Eg: each item in styles.h1
+    @each $key, $val in $rules {
+      // Eg: Lookup "fontFamily": "body":
+      $rule: map-merge($rule, get-style($key, $val));
+    }
+
+    $styles: map-merge(
+      $styles,
+      (
+        $name: $rule
+      )
+    );
+  }
+  @return $styles;
+}

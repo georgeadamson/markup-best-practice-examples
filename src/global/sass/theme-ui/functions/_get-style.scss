@@ -1,0 +1,28 @@
+// "todo": {
+//   "text-transform": "uppercase",
+//   "mt": 0,
+//   "mb": "20px"
+// }
+
+// Lookup the real CSS for the specified Theme UI syntax:
+// Eg: font:body -> { font-family: Arial }
+@function get-style($key, $val) {
+  @if ($key == color) {
+    @return (color: colors($val));
+  } @else if ($key == background) {
+    @return (background-color: colors($val));
+  } @else if ($key == fontFamily) {
+    @return (font-family: fonts($val));
+  } @else if ($key == fontSize) {
+    @return (font-size: fontSizes($val));
+  } @else if ($key == fontWeight) {
+    @return (font-weight: fontWeights($val));
+  } @else if ($key == lineHeight) {
+    @return (line-height: lineHeights($val));
+  } @else if ($key == letterSpacing) {
+    @return (letter-spacing: letterSpacings($val));
+  } @else {
+    @warn 'get-style($key,$val): Unexpected $key: ($key:#{$key}, $val:#{$val})';
+    @return ();
+  }
+}

@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Samples of best practice vanilla html, ready for use in any component framework",
   "main": "index.js",
+  "sass": "src/global/sass/global.scss",
+  "style": "src/global/sass/global.scss",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
@@ -22,6 +24,7 @@
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
     "node-sass": "^4.12.0",
+    "node-sass-json-importer": "^4.1.0",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0"
   }

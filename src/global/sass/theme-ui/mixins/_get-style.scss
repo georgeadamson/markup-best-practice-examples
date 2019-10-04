@@ -1,0 +1,18 @@
+@import '../functions/get-style';
+@import './get-style-breakpoints';
+
+// Render map of styles as css rules:
+// Eg: .heading { @include get-style(h1); }
+@mixin get-style($name, $theme: $theme) {
+  $style: map-get(map-get($theme, styles), $name);
+
+  @each $key, $val in $style {
+    @if type-of($val) == list {
+      @include get-style-breakpoints($key, $val, $theme);
+    } @else {
+      @each $cssProp, $cssVal in get-style($key, $val) {
+        #{$cssProp}: #{$cssVal};
+      }
+    }
+  }
+}

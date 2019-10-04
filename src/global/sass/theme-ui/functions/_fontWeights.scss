@@ -1,0 +1,3 @@
+@function fontWeights($keys...) {
+  @return theme(fontWeights, $keys...);
+}

@@ -1,0 +1,23 @@
+// https://theme-ui.com/theme-spec#theme-scales
+$themeExpectedStyleKeys: [ p a h1 h2 h3 h4 h5 h6 img pre code ol ul li
+  blockquote hr em table tr th td strong delete b i div root html body ];
+
+// Add your custom variants here so they don't break your theme validation:
+$themeCustomStyleKeys: [];
+
+@function validate-theme-styles($theme: $theme) {
+  $expectedKeys: join($themeExpectedStyleKeys, $themeCustomStyleKeys);
+
+  @if map-has-key($theme, styles) {
+    $styles: map-get($theme, styles);
+
+    @each $key in map-keys($styles) {
+      @if index($expectedKeys, $key) == null {
+        @warn 'Warning: Your Theme-UI config contains an unexpected key: `theme.styles.#{$key}`. See https://theme-ui.com/theme-spec#styles';
+        @return false;
+      }
+    }
+  }
+
+  @return true;
+}

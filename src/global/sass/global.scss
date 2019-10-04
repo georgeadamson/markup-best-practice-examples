@@ -1,9 +1,43 @@
 // Todo: postcss css-mqpacker
 @import './theme-ui.config';
 
+@font-face {
+  font-family: have-heart-two;
+  src: url(https://use.typekit.net/af/04bf5e/00000000000000003b9b1e96/27/l?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n4&v=3)
+      format('woff2'),
+    url(https://use.typekit.net/af/04bf5e/00000000000000003b9b1e96/27/d?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n4&v=3)
+      format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   background: colors(primary);
-  //   font-family: fonts(heading);
+  background: theme(colors, background);
 
-  @include get-style(body);
+  font-family: fonts(body);
+  font-family: theme(fonts, body);
+
+  font-size: fontSizes(0);
+  font-size: theme(fontSizes, 0);
+
+  font-weight: fontWeights(body);
+  font-weight: theme(fontWeights, body);
+
+  line-height: lineHeights(body);
+  line-height: theme(lineHeights, body);
+
+  letter-spacing: letterSpacings(body);
+  letter-spacing: theme(letterSpacings, body);
+
+  // @include get-style(body);
+}
+
+.h1 {
+  // @include get-style(h1);
+}
+
+.h2 {
+  //@include get-style(h2);
 }

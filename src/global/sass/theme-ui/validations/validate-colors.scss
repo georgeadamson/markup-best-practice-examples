@@ -1,0 +1,23 @@
+// https://theme-ui.com/theme-spec#theme-scales
+$themeExpectedColorKeys: [ text background primary secondary accent muted modes
+  ];
+
+// Add your custom variants here so they don't break your theme validation:
+$themeCustomColorKeys: [];
+
+@function validate-theme-colors($theme: $theme) {
+  $expectedKeys: join($themeExpectedColorKeys, $themeCustomColorKeys);
+
+  @if map-has-key($theme, colors) {
+    $colors: map-get($theme, colors);
+
+    @each $key in map-keys($colors) {
+      @if index($expectedKeys, $key) == null {
+        @warn 'Warning: Your Theme-UI config contains an unexpected key: `theme.colors.#{$key}`. See https://theme-ui.com/theme-spec#theme-scales';
+        @return false;
+      }
+    }
+  }
+
+  @return true;
+}
