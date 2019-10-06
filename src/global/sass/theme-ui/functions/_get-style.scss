@@ -21,8 +21,10 @@
     @return (line-height: lineHeights($val));
   } @else if $key == letterSpacing {
     @return (letter-spacing: letterSpacings($val));
+  } @else if $key == margin {
+    @return (margin: space($val));
   } @else {
-    @warn '@function get-style($key,$val): Unexpected $key: ($key:#{$key}, $val:#{$val})';
+    @warn '@function get-style($key,$val): Unexpected theme $key: ($key:#{$key}, $val:#{$val})';
     @return ();
   }
 }

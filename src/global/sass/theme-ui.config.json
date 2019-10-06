@@ -33,16 +33,18 @@
     "sizes": [8, 12, 16, 24, 32, 48, 64, 96, 128, 192, 256, 384, 512, 640, 768],
     "styles": {
       "h1": {
-        "fontSize": ["65px", "100px"],
+        "fontSize": ["65px", "", "100px"],
         "fontFamily": "heading",
         "fontWeight": "heading",
-        "color": "primary"
+        "color": "primary",
+        "margin": [0, 1, 2, 4]
       },
       "h2": {
         "fontSize": "80px",
         "fontFamily": "heading",
         "fontWeight": "heading",
-        "color": "primary"
+        "color": "primary",
+        "margin": 1
       },
       "body": {
         "fontSize": "18px",

@@ -6,7 +6,7 @@
   $breakpoints: map-get($theme, breakpoints);
 
   @each $val in $values {
-    @if $val == null {
+    @if $val == null or $val == 'null' or $val == '' {
       // null means skip this breakpoint.
     } @else {
       @if $i == 1 {
