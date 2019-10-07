@@ -32,6 +32,16 @@ module.exports = async function({ config, mode }) {
         }
       },
       {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: true,
+          // Set postcss.config.js config path && ctx
+          config: {
+            path: './.storybook/'
+          }
+        }
+      },
+      {
         loader: 'sass-loader',
         // Apply the JSON importer via sass-loader's options.
         // https://github.com/webpack-contrib/sass-loader
