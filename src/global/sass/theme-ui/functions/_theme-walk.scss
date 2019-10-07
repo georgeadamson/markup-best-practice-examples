@@ -10,11 +10,11 @@
 @function theme-walk($map, $keys...) {
   $breadcrumbTrail: [];
 
-  // The last item in $keys might be flag to silence error messages:
+  // Internal use only: The last item in $keys might be flag to silence error messages:
   $silent: nth($keys, length($keys));
 
   @if type-of($silent) == bool {
-    // Remove leaf key:
+    // Remove leaf key because it was a flag for internal use:
     $keys: list-slice(1, length($keys) - 1);
   } @else {
     $silent: false;
