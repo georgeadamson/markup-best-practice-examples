@@ -1,3 +1,6 @@
+// JS to audit fonts:
+// Array.from(document.querySelectorAll('*')).reduce((fonts,elem) => { const style= window.getComputedStyle(elem); (fonts[style.fontFamily] = fonts[style.fontFamily] || []).push(elem); return fonts; }, {})
+
 // Todo: postcss css-mqpacker
 @import './theme-ui.config';
 
@@ -41,10 +44,11 @@ body {
 }
 
 .h1 {
-  font-size: fontSizes(7);
-  @include get-style(h1);
+  color: colors('secondary.8');
+  // font-size: fontSizes(7);
+  // @include get-style(h1);
 }
 
 .h2 {
-  @include get-style(h2);
+  // @include get-style(h2);
 }

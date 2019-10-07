@@ -4,6 +4,17 @@
       "text": "#333132",
       "background": "#F9F9F9",
       "primary": "#AF0D63",
+      "secondary": [
+        "#9F7B42",
+        "#A98246",
+        "#B3894A",
+        "#BD8F4E",
+        "#C79652",
+        "#CF9E56",
+        "#D6A55A",
+        "#DDAD5F",
+        "#E3B464"
+      ],
       "modes": {
         "dark": {
           "text": "#fff",
@@ -33,7 +44,7 @@
     "sizes": [8, 12, 16, 24, 32, 48, 64, 96, 128, 192, 256, 384, 512, 640, 768],
     "styles": {
       "h1": {
-        "fontSize": ["65px", "", "100px"],
+        "fontSize": ["38px", "65px", "", "100px"],
         "fontFamily": "heading",
         "fontWeight": "heading",
         "color": "primary",
@@ -44,7 +55,7 @@
         "fontFamily": "heading",
         "fontWeight": "heading",
         "color": "primary",
-        "margin": 1
+        "margin": [0, 1, 2, 4]
       },
       "body": {
         "fontSize": "18px",

@@ -1,3 +1,8 @@
+// Dependencies:
+// - list-slice()
+// - list-splice()
+// - to-number()
+
 // Usage:
 // - theme-walk($map, $key)
 // - theme-walk($map, $keys...)
@@ -9,8 +14,41 @@
   $silent: nth($keys, length($keys));
 
   @if type-of($silent) == bool {
-    // Remove last
-    @warn 'TODO: Remove $silent flag';
+    // Remove leaf key:
+    $keys: list-slice(1, length($keys) - 1);
+  } @else {
+    $silent: false;
+  }
+
+  // When the leaf key includes an index, eg: "primary.3",
+  // split it into 2 keys, eg: [colors, primary.3] --> [colors, primary, 3]
+  $leaf-key: nth($keys, length($keys));
+  $index-of-dot: str-index($leaf-key, '.');
+  @if $index-of-dot > 1 {
+    // A list-split() function would be useful here:
+    $keyA: str-slice($leaf-key, 1, $index-of-dot - 1);
+    $keyB: str-slice($leaf-key, $index-of-dot + 1);
+
+    // $keyB is a string that needs to be converted to number.
+    // Assume the number must be between 0 and 99:
+    @if str-length($keyB) > 0 and str-length($keyB) < 3 {
+      $first-digit: str-slice($keyB, 1, 1);
+      $last-digit: str-slice($keyB, str-length($keyB), -1);
+
+      // Rudimentary duck-typing to ensure $key is a number:
+      // We merely test whether first & last digits are numeric.
+      @if str-index('123456789', $first-digit) !=
+        null and
+        str-index('0123456789', $last-digit) !=
+        null
+      {
+        // All to prevent this function from choking:
+        $keyB: to-number($keyB);
+
+        // Replace the last key with the key & index derived from it:
+        $keys: list-splice($keys, length($keys), 1, #{$keyA}, $keyB);
+      }
+    }
   }
 
   $result: $map;
@@ -29,10 +67,11 @@
         @return $key;
       }
       // Leaf nodes such as fontSizes can be a list of values:
-      // In which case $key must be an index.
-      // Note: The calling function may need to append units (eg px)
+      // In which case $key must be an index (zero-based).
+      // Note: The calling function may need to append units to the return value (eg px)
       @else if type-of($result) == list and type-of($key) == number {
-        @if $key >= 0 and $key <= length($result) {
+        // Note: This is a Javascript index so it is zero-based.
+        @if $key >= 0 and $key < length($result) {
           @return nth($result, $key + 1);
         } @else {
           @if $silent {
